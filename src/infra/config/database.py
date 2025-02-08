@@ -11,7 +11,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Carregar URL do banco de dados do ambiente
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://agenciaimpulsemax@localhost:5432/nexid_db")
+#DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://agenciaimpulsemax@localhost:5432/nexid_db")
+DATABASE_URL = "sqlite:////Users/agenciaimpulsemax/Desktop/Projetos/ambiente_nexid/nexid_db.sqlite"
 
 # Criar o engine do SQLAlchemy
 engine = create_engine(

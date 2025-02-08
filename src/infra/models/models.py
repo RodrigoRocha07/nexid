@@ -4,6 +4,8 @@ from src.infra.config.database import Base
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import Session
 
+#migrar no alembic - comando: alembic revision --autogenerate -m "mensagem"
+#migrar no alembic - comando: alembic upgrade head
 
 
 class User(Base):
@@ -12,3 +14,4 @@ class User(Base):
     name = Column(String(50), nullable=False)
     email = Column(String(50), unique=False, nullable=False)
     password = Column(String(255), nullable=False)
+    token = Column(String(255), nullable=True)

@@ -1,7 +1,7 @@
 import jwt
 from datetime import datetime, timezone, timedelta
 
-SECRET_KEY = "IMPULSEMAX"
+SECRET_KEY = "NEXID"
 ALGORITHM = 'HS256'
 TIME_EXP = 60*3
 TIME_EXP_anual = 60*24*366

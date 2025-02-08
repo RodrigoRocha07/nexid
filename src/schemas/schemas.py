@@ -9,3 +9,10 @@ class User(BaseModel):
 
     class Config:
         rom_attributes = True
+        
+class LoginUser(BaseModel):
+    email: str
+    password: str
+    
+    class Config:
+        rom_attributes = True

@@ -5,7 +5,7 @@ from fastapi.responses import RedirectResponse
 from src.infra.config.database import criar_db, get_db
 from sqlalchemy.orm import Session
 from src.schemas import schemas 
-
+from typing import Dict
 
 
 
@@ -22,29 +22,37 @@ async def home():
     return RedirectResponse(url="/docs", status_code=status.HTTP_302_FOUND)
 
 
+@app.post("/create-database", tags=["Database"])
+async def create_database():
+    criar_db()
+    return {"message": "Database created successfully"}
+
 #___________________________________________________USERS
 
-@app.get("/users/list", tags=["users"])
+@app.get("/users/list", tags=["Users"])
 async def users(request: Request,db:Session = Depends(get_db)):
     users = RepositorioUsers(db).list()
     return users
 
-@app.post("/users/create", tags=["users"])
+@app.post("/users/create", tags=["Users"])
 async def create_user(data: schemas.User,db:Session = Depends(get_db)):
     RepositorioUsers(db).create(data)    
     return {"message": "User created successfully"}
 
 
-@app.delete("/users/delete/{id}", tags=["users"])
+@app.delete("/users/delete/{id}", tags=["Users"])
 async def delete_user(id:str,db:Session = Depends(get_db)):
     RepositorioUsers(db).delete(id)
     return {"message": "User deleted successfully"}
 
-@app.put("/users/update/{id}", tags=["users"])
+@app.put("/users/update/{id}", tags=["Users"])
 async def update_user(id:str,data: schemas.User,db:Session = Depends(get_db)):
     RepositorioUsers(db).update(id,data)
     return {"message": "User updated"}
 
 #___________________________________________________auth
 
-
+@app.post("/auth/login", tags=["Auth"])
+async def login(data: schemas.LoginUser ,db:Session = Depends(get_db)):
+    token = RepositorioUsers(db).login(data)
+    return {"token": token}

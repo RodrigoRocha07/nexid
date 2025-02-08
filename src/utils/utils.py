@@ -1,11 +1,12 @@
 from google.cloud.vision_v1 import types
 from google.cloud import vision_v1
-from back_faceid.src.utils.cnh import *  
-import cv2
-import os
 import face_recognition as fr
 import os
 import cv2
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 
 def extrair_dado(texto, documento):
     linhas = texto.split("\n")
@@ -103,3 +104,26 @@ def detect_document_text(image_path: str):
     else:
         print("Nenhum texto detectado.")
 
+
+def enviar_email(destinatario, assunto, mensagem):
+    remetente = "seuemail@gmail.com"
+    senha = "sua_senha"
+
+    # Criando a mensagem
+    msg = MIMEMultipart()
+    msg["From"] = remetente
+    msg["To"] = destinatario
+    msg["Subject"] = assunto
+
+    msg.attach(MIMEText(mensagem, "plain"))
+
+    try:
+        # Conectando ao servidor SMTP do Gmail
+        servidor = smtplib.SMTP("smtp.gmail.com", 587)
+        servidor.starttls()
+        servidor.login(remetente, senha)
+        servidor.sendmail(remetente, destinatario, msg.as_string())
+        servidor.quit()
+        print("E-mail enviado com sucesso!")
+    except Exception as e:
+        print(f"Erro ao enviar e-mail: {e}")

@@ -16,3 +16,22 @@ class LoginUser(BaseModel):
     
     class Config:
         rom_attributes = True
+        
+class Client(BaseModel):
+    id:Optional[int] = None
+    name: str
+    email: str
+    password : str 
+    phone: Optional[str] = None
+    address: Optional[str] = None
+    cnpj: Optional[str] = None
+    active: Optional[bool] = False
+
+    class Config:
+        rom_attributes = True
+        
+class ActivateClient(BaseModel):
+    id: int
+
+    class Config:
+        rom_attributes = True

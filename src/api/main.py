@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends, Request
 from fastapi import status
-from src.infra.repositorios.repositorio import RepositorioUsers
+from src.infra.repositorios.repositorio import RepositorioUsers, RepositorioClients
 from fastapi.responses import RedirectResponse
 from src.infra.config.database import criar_db, get_db
 from sqlalchemy.orm import Session
@@ -56,3 +56,15 @@ async def update_user(id:str,data: schemas.User,db:Session = Depends(get_db)):
 async def login(data: schemas.LoginUser ,db:Session = Depends(get_db)):
     token = RepositorioUsers(db).login(data)
     return {"token": token}
+#___________________________________________________client
+
+@app.post("/client/create", tags=["Client"])
+async def create_client(data: schemas.Client,db:Session = Depends(get_db)):
+    RepositorioClients(db).create(data)   
+    return {"message": "Client created successfully"}
+
+
+@app.post("/client/activate", tags=["Client"])
+async def activate_client(data: schemas.ActivateClient ,db:Session = Depends(get_db)):
+    RepositorioClients(db).activate(data.id)
+    return {"message": "Client activated successfully"}

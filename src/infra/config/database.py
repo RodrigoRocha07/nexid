@@ -4,17 +4,19 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 import logging
 import time
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Carregar URL do banco de dados do ambiente
-#DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://agenciaimpulsemax@localhost:5432/nexid_db")
-DATABASE_URL = "sqlite:////Users/agenciaimpulsemax/Desktop/Projetos/ambiente_nexid/nexid_db.sqlite"
 
-# Criar o engine do SQLAlchemy
+
+# Criar o engine do SQLA#lchemy
 engine = create_engine(
     DATABASE_URL,
     pool_pre_ping=True,

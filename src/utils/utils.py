@@ -83,11 +83,15 @@ def reconhecer_rosto_para_login(imagem_input, pasta_imagens):
 
 
 
+from dotenv import load_dotenv
+import os
 
-
+load_dotenv()
+GOOGLE_DOC_API_KEY = os.getenv("GOOGLE_DOC_API_KEY")
 
 def detect_document_text(image_path: str):
-    api_key = 'AIzaSyAOiewr_WEerviGsVCZ_Skc66Jt8rckm4M'
+    api_key = GOOGLE_DOC_API_KEY
+    
     client = vision_v1.ImageAnnotatorClient(client_options={"api_key": api_key})
     with open(image_path, 'rb') as image_file:
         content = image_file.read()
@@ -100,5 +104,4 @@ def detect_document_text(image_path: str):
         return full_text
     else:
         print("Nenhum texto detectado.")
-
 

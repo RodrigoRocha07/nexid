@@ -6,7 +6,7 @@ from src.infra.config.database import criar_db, get_db
 from sqlalchemy.orm import Session
 from src.schemas import schemas 
 from typing import Dict
-
+from src.providers import token_provider
 
 
 app = FastAPI(
@@ -56,6 +56,12 @@ async def update_user(id:str,data: schemas.User,db:Session = Depends(get_db)):
 async def login(data: schemas.LoginUser ,db:Session = Depends(get_db)):
     token = RepositorioUsers(db).login(data)
     return {"token": token}
+
+@app.post("/auth/validateToken", tags=["Auth"])
+async def validate_token(data: Dict,db:Session = Depends(get_db)):
+    token = data['token']
+    return token_provider.verificar_token(token)
+
 #___________________________________________________client
 
 @app.post("/client/create", tags=["Client"])

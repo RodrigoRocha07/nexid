@@ -103,7 +103,7 @@ class RepositorioUsers():
         except Exception as e:
             raise HTTPException(status_code=400, detail={"message": str(e), "severity": "error"})
         
-        
+    
 #__________________________________________CLIENT__________________________________________
 
 class RepositorioClients():

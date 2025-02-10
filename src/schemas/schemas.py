@@ -35,3 +35,10 @@ class ActivateClient(BaseModel):
 
     class Config:
         rom_attributes = True
+        
+        
+class Token(BaseModel):
+    token: str
+
+    class Config:
+        rom_attributes = True
